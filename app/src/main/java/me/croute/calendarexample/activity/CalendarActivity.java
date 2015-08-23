@@ -222,10 +222,6 @@ public class CalendarActivity extends Activity implements OnClickListener {
     public class CalendarPagerAdapter extends PagerAdapter
             implements OnItemClickListener {
 
-        private GridView mGvCalendar;
-
-        private Calendar mCurrentCalendar;
-
         @Override
         public int getCount() {
             return 5;
@@ -249,6 +245,7 @@ public class CalendarActivity extends Activity implements OnClickListener {
             gvCalendar.setAdapter(calAdapter);
 
             Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.DAY_OF_MONTH, 1);
 
             switch (position) {
                 case 0:
@@ -263,22 +260,14 @@ public class CalendarActivity extends Activity implements OnClickListener {
                 case 4:
                     cal.add(Calendar.MONTH, 2);
                     break;
-                default:
-                    break;
+
             }
-
-            setTitle(cal);
-            cal.set(Calendar.DAY_OF_MONTH, 1);
-            getCalendar(calAdapter, cal);
-
-            mCurrentCalendar = cal;
-
             setTitle(cal);
             getCalendar(calAdapter, cal);
 
             container.addView(gvCalendar);
 
-            return mGvCalendar;
+            return gvCalendar;
         }
 
         @Override
@@ -288,17 +277,9 @@ public class CalendarActivity extends Activity implements OnClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            CalendarAdapter adapter = (CalendarAdapter) parent.getAdapter();
-//            adapter.setSelectedItem(position);
-//            DayInfo day = adapter.getItem(position);
-//
-//            if (!day.isInThisMonth()) {
-//                if (position > 15) {
-//                    moveToNextMonth(day, getNextMonth(mCurrentCalendar), adapter);
-//                } else {
-//                    moveToLastMonth(day, mCurrentCalendar, adapter);
-//                }
-//            }
+
+            ((CalendarAdapter) parent.getAdapter()).setSelectedItem(position);
+
             int page = mVpCalendar.getCurrentItem();
 
             if (position > 15) {

@@ -48,7 +48,6 @@ public class CalendarAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        Log.i(TAG, "getCount(), " + mDayList.size());
         return mDayList.size();
     }
 
