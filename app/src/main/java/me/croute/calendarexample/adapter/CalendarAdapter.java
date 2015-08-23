@@ -128,6 +128,7 @@ public class CalendarAdapter extends BaseAdapter {
 
             if (day.isSelected()) {
                 dayViewHolder.tvDay.setBackgroundColor(Color.RED);
+                dayViewHolder.tvDay.setTextColor(Color.WHITE);
             } else {
                 dayViewHolder.tvDay.setBackgroundColor(Color.TRANSPARENT);
             }

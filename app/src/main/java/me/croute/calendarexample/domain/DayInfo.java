@@ -8,9 +8,11 @@ package me.croute.calendarexample.domain;
  */
 public class DayInfo {
     private String day;
-    private boolean inThisMonth;
+
+    private int month;
 
     private boolean isSelected;
+    private boolean inThisMonth;
 
     public boolean isSelected() {
         return isSelected;
@@ -56,12 +58,21 @@ public class DayInfo {
         this.inThisMonth = inThisMonth;
     }
 
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
     @Override
     public String toString() {
         return "DayInfo{" +
                 "day='" + day + '\'' +
-                ", inThisMonth=" + inThisMonth +
+                ", month=" + month +
                 ", isSelected=" + isSelected +
+                ", inThisMonth=" + inThisMonth +
                 '}';
     }
 }

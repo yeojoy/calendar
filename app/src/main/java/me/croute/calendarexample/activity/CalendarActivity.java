@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -103,10 +104,6 @@ public class CalendarActivity extends Activity implements OnClickListener {
         calendar.add(Calendar.MONTH, 1);
         Log.e("이번달 시작일", calendar.get(Calendar.DAY_OF_MONTH) + "");
 
-//        if (dayOfMonth == SUNDAY) {
-//            dayOfMonth += 7;
-//        }
-
         lastMonthStartDay -= (dayOfMonth - 1) - 1;
 
         Log.d("계산 후 지난 달 마지막 주 시작일", lastMonthStartDay + "");
@@ -121,6 +118,8 @@ public class CalendarActivity extends Activity implements OnClickListener {
             day.setDay(Integer.toString(date));
             day.setInThisMonth(false);
             day.setIsSelected(false);
+            day.setMonth(calendar.get(Calendar.MONTH) - 1);
+
 
             dayList.add(day);
         }
@@ -129,6 +128,7 @@ public class CalendarActivity extends Activity implements OnClickListener {
             day.setDay(Integer.toString(i));
             day.setInThisMonth(true);
             day.setIsSelected(false);
+            day.setMonth(calendar.get(Calendar.MONTH));
 
             dayList.add(day);
         }
@@ -144,9 +144,11 @@ public class CalendarActivity extends Activity implements OnClickListener {
             day.setDay(Integer.toString(i));
             day.setInThisMonth(false);
             day.setIsSelected(false);
-
+            day.setMonth(calendar.get(Calendar.MONTH) + 1);
             dayList.add(day);
         }
+
+        setTitle(calendar);
 
         adapter.setDayList(dayList);
     }
@@ -262,7 +264,7 @@ public class CalendarActivity extends Activity implements OnClickListener {
                     break;
 
             }
-            setTitle(cal);
+
             getCalendar(calAdapter, cal);
 
             container.addView(gvCalendar);
@@ -279,18 +281,18 @@ public class CalendarActivity extends Activity implements OnClickListener {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             ((CalendarAdapter) parent.getAdapter()).setSelectedItem(position);
-
+            DayInfo day = ((CalendarAdapter) parent.getAdapter()).getItem(position);
             int page = mVpCalendar.getCurrentItem();
-
-            if (position > 15) {
-                mVpCalendar.setCurrentItem(page++);
-            } else {
-                mVpCalendar.setCurrentItem(page--);
+            if (!day.isInThisMonth()) {
+                if (position > 15) {
+                    mVpCalendar.setCurrentItem(page + 1);
+                } else {
+                    mVpCalendar.setCurrentItem(page - 1);
+                }
             }
 
+            Toast.makeText(CalendarActivity.this, day.toString(), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void setTitle(Calendar cal) {
